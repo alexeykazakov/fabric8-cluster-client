@@ -22,30 +22,13 @@ GO_BIN := $(shell command -v $(GO_BIN_NAME) 2> /dev/null)
 # Define and get the vakue for UNAME_S variable from shell
 UNAME_S := $(shell uname -s)
 
-# This is a fix for a non-existing user in passwd file when running in a docker
-# container and trying to clone repos of dependencies
-GIT_COMMITTER_NAME ?= "user"
-GIT_COMMITTER_EMAIL ?= "user@example.com"
-export GIT_COMMITTER_NAME
-export GIT_COMMITTER_EMAIL
-
 # Used as target and binary output names... defined in includes
-CLIENT_DIR=cluster/tool/cluster-cli
-
-COMMIT=$(shell git rev-parse HEAD)
-GITUNTRACKEDCHANGES := $(shell git status --porcelain --untracked-files=no)
-ifneq ($(GITUNTRACKEDCHANGES),)
-COMMIT := $(COMMIT)-dirty
-endif
-BUILD_TIME=`date -u '+%Y-%m-%dT%H:%M:%SZ'`
+CLIENT_DIR=tool/cluster
 
 PACKAGE_NAME := github.com/fabric8-services/fabric8-cluster-client
 
 # For the global "clean" target all targets in this variable will be executed
 CLEAN_TARGETS =
-
-# Pass in build time variables to main
-LDFLAGS=-ldflags "-X ${PACKAGE_NAME}/controller.Commit=${COMMIT} -X ${PACKAGE_NAME}/controller.BuildTime=${BUILD_TIME}"
 
 # Call this function with $(call log-info,"Your message")
 define log-info =
@@ -101,7 +84,6 @@ endif
 $(GOAGEN_BIN): $(VENDOR_DIR)
 	cd $(VENDOR_DIR)/github.com/goadesign/goa/goagen && go build -v
 
-
 CLEAN_TARGETS += clean-artifacts
 .PHONY: clean-artifacts
 ## Removes the ./bin directory.
@@ -145,12 +127,10 @@ $(VENDOR_DIR): Gopkg.toml Gopkg.lock
 	@echo "checking dependencies..."
 	@$(DEP_BIN) ensure -v
 
-app/controllers.go: $(GOAGEN_BIN)
-	$(GOAGEN_BIN) client -d github.com/fabric8-services/fabric8-cluster/design --pkg client --out cluster
-
 .PHONY: generate
 ## Generate GOA sources. Only necessary after clean of if changed `design` folder.
-generate: app/controllers.go
+generate: $(GOAGEN_BIN)
+	$(GOAGEN_BIN) client -d github.com/fabric8-services/fabric8-cluster/design --pkg pkg --tool cluster
 
 .PHONY: regenerate
 ## Runs the "clean-generated" and the "generate" target
@@ -172,9 +152,6 @@ show-info:
 .PHONY: prebuild-check
 prebuild-check: $(TMP_PATH) $(INSTALL_PREFIX) $(CHECK_GOPATH_BIN) show-info
 # Check that all tools where found
-ifndef GIT_BIN
-	$(error The "$(GIT_BIN_NAME)" executable could not be found in your PATH)
-endif
 ifndef DEP_BIN
 	$(error The "$(DEP_BIN_NAME)" executable could not be found in your PATH)
 endif

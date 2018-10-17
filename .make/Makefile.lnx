@@ -1,7 +1,6 @@
-BINARY_CLIENT_BIN=$(INSTALL_PREFIX)/cluster-cli
+BINARY_CLIENT_BIN=$(INSTALL_PREFIX)/cluster
 GOAGEN_BIN=$(VENDOR_DIR)/github.com/goadesign/goa/goagen/goagen
 
-GIT_BIN_NAME := git
 GO_BIN_NAME := go
 
 CHECK_GOPATH_BIN := $(INSTALL_PREFIX)/check_gopath
