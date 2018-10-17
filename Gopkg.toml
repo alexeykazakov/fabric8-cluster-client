@@ -45,7 +45,7 @@ required = [
 
 [[constraint]]
   name = "github.com/fabric8-services/fabric8-cluster"
-  revision = "275f58d985e6adf2e3bf32de63da30121cec366a"
+  revision = "fa5ad2196e63f13c927d9321436840022083067d"
 
 [prune]
   go-tests = true
