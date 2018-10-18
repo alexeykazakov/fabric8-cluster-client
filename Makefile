@@ -38,7 +38,7 @@ endef
 # If nothing was specified, run all targets as if in a fresh clone
 .PHONY: all
 ## Default target - fetch dependencies, generate code and build.
-all: prebuild-check deps generate build
+all: prebuild-check deps build
 
 .PHONY: help
 # Based on https://gist.github.com/rcmachado/af3db315e31383502660
@@ -70,7 +70,7 @@ help:/
 
 .PHONY: build
 ## Build client.
-build: prebuild-check deps generate $(BINARY_CLIENT_BIN) # do the build
+build: prebuild-check deps $(BINARY_CLIENT_BIN) # do the build
 
 $(BINARY_CLIENT_BIN): $(SOURCES)
 ifeq ($(OS),Windows_NT)
@@ -126,16 +126,6 @@ endif
 $(VENDOR_DIR): Gopkg.toml Gopkg.lock
 	@echo "checking dependencies..."
 	@$(DEP_BIN) ensure -v
-
-.PHONY: generate
-## Generate GOA sources. Only necessary after clean of if changed `design` folder.
-generate: $(GOAGEN_BIN)
-	$(GOAGEN_BIN) client -d github.com/fabric8-services/fabric8-cluster/design --pkg cluster
-
-.PHONY: regenerate
-## Runs the "clean-generated" and the "generate" target
-regenerate: clean-generated generate
-
 
 $(INSTALL_PREFIX):
 # Build artifacts dir
