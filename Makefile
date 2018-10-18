@@ -130,7 +130,7 @@ $(VENDOR_DIR): Gopkg.toml Gopkg.lock
 .PHONY: generate
 ## Generate GOA sources. Only necessary after clean of if changed `design` folder.
 generate: $(GOAGEN_BIN)
-	$(GOAGEN_BIN) client -d github.com/fabric8-services/fabric8-cluster/design --pkg pkg --tool cluster
+	$(GOAGEN_BIN) client -d github.com/fabric8-services/fabric8-cluster/design --pkg cluster --tool cluster
 
 .PHONY: regenerate
 ## Runs the "clean-generated" and the "generate" target
