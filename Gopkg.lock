@@ -26,11 +26,6 @@
   version = "v5.0.1"
 
 [[projects]]
-  name = "github.com/fabric8-services/fabric8-cluster"
-  packages = ["design"]
-  revision = "fa5ad2196e63f13c927d9321436840022083067d"
-
-[[projects]]
   name = "github.com/goadesign/goa"
   packages = [
     ".",
@@ -128,6 +123,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ebe6a4ddd266a73108bbc5370416452a995b93edcb4c9407e0eb0cdf4d293730"
+  inputs-digest = "04d51b86bc0c6221d08507843a9147782580e05385cf7849fc09c62ea68f16c9"
   solver-name = "gps-cdcl"
   solver-version = 1
