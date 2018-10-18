@@ -7,7 +7,6 @@
 // --design=github.com/fabric8-services/fabric8-cluster/design
 // --out=$(GOPATH)/src/github.com/fabric8-services/fabric8-cluster-client
 // --pkg=cluster
-// --tool=cluster
 // --version=v1.3.0
 
 package cluster

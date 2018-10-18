@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/fabric8-services/fabric8-cluster-client/pkg"
+	"github.com/fabric8-services/fabric8-cluster-client/cluster"
 	"github.com/fabric8-services/fabric8-cluster-client/tool/cli"
 	goaclient "github.com/goadesign/goa/client"
 	"github.com/spf13/cobra"
@@ -20,7 +20,7 @@ func main() {
 
 	// Create client struct
 	httpClient := newHTTPClient()
-	c := pkg.New(goaclient.HTTPClientDoer(httpClient))
+	c := cluster.New(goaclient.HTTPClientDoer(httpClient))
 
 	// Register global flags
 	app.PersistentFlags().StringVarP(&c.Scheme, "scheme", "s", "", "Set the requests scheme")

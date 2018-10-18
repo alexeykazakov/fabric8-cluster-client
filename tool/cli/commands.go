@@ -6,8 +6,7 @@
 // $ goagen
 // --design=github.com/fabric8-services/fabric8-cluster/design
 // --out=$(GOPATH)/src/github.com/fabric8-services/fabric8-cluster-client
-// --pkg=pkg
-// --tool=cluster
+// --pkg=cluster
 // --version=v1.3.0
 
 package cli
@@ -15,7 +14,7 @@ package cli
 import (
 	"context"
 	"encoding/json"
-	"github.com/fabric8-services/fabric8-cluster-client/pkg"
+	"github.com/fabric8-services/fabric8-cluster-client/cluster"
 	"github.com/goadesign/goa"
 	goaclient "github.com/goadesign/goa/client"
 	uuid "github.com/goadesign/goa/uuid"
@@ -40,7 +39,7 @@ type (
 )
 
 // RegisterCommands registers the resource action CLI commands.
-func RegisterCommands(app *cobra.Command, c *pkg.Client) {
+func RegisterCommands(app *cobra.Command, c *cluster.Client) {
 	var command, sub *cobra.Command
 	command = &cobra.Command{
 		Use:   "show",
@@ -221,7 +220,7 @@ func boolArray(ins []string) ([]bool, error) {
 }
 
 // Run makes the HTTP request corresponding to the ShowClustersCommand command.
-func (cmd *ShowClustersCommand) Run(c *pkg.Client, args []string) error {
+func (cmd *ShowClustersCommand) Run(c *cluster.Client, args []string) error {
 	var path string
 	if len(args) > 0 {
 		path = args[0]
@@ -241,11 +240,11 @@ func (cmd *ShowClustersCommand) Run(c *pkg.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *ShowClustersCommand) RegisterFlags(cc *cobra.Command, c *pkg.Client) {
+func (cmd *ShowClustersCommand) RegisterFlags(cc *cobra.Command, c *cluster.Client) {
 }
 
 // Run makes the HTTP request corresponding to the ShowStatusCommand command.
-func (cmd *ShowStatusCommand) Run(c *pkg.Client, args []string) error {
+func (cmd *ShowStatusCommand) Run(c *cluster.Client, args []string) error {
 	var path string
 	if len(args) > 0 {
 		path = args[0]
@@ -265,5 +264,5 @@ func (cmd *ShowStatusCommand) Run(c *pkg.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *ShowStatusCommand) RegisterFlags(cc *cobra.Command, c *pkg.Client) {
+func (cmd *ShowStatusCommand) RegisterFlags(cc *cobra.Command, c *cluster.Client) {
 }

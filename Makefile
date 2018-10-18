@@ -23,7 +23,7 @@ GO_BIN := $(shell command -v $(GO_BIN_NAME) 2> /dev/null)
 UNAME_S := $(shell uname -s)
 
 # Used as target and binary output names... defined in includes
-CLIENT_DIR=tool/cluster
+CLIENT_DIR=tool/cluster-cli
 
 PACKAGE_NAME := github.com/fabric8-services/fabric8-cluster-client
 
@@ -130,7 +130,7 @@ $(VENDOR_DIR): Gopkg.toml Gopkg.lock
 .PHONY: generate
 ## Generate GOA sources. Only necessary after clean of if changed `design` folder.
 generate: $(GOAGEN_BIN)
-	$(GOAGEN_BIN) client -d github.com/fabric8-services/fabric8-cluster/design --pkg cluster --tool cluster
+	$(GOAGEN_BIN) client -d github.com/fabric8-services/fabric8-cluster/design --pkg cluster
 
 .PHONY: regenerate
 ## Runs the "clean-generated" and the "generate" target
